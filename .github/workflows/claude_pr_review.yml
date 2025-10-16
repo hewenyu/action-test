@@ -1,10 +1,8 @@
-name: Claude Issue Triage
-description: Run Claude Code for issue triage in GitHub Actions
+name: Claude Code PR Review
+description: Run Claude Code for comprehensive PR review in GitHub Actions
 on:
-  issue_comment:
-    types: [created]
-  issues:
-    types: [opened, assigned, labeled]
+  pull_request:
+    types: [opened, synchronize, ready_for_review, reopened]
 
 jobs:
   triage-issue:
@@ -13,7 +11,8 @@ jobs:
     environment: CLAUDE
     permissions:
       contents: read
-      issues: write
+      pull-requests: write
+      id-token: write
 
     steps:
       - name: Checkout repository
