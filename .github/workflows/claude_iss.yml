@@ -1,0 +1,40 @@
+name: Claude Issue Triage
+description: Run Claude Code for issue triage in GitHub Actions
+on:
+  issue_comment:
+    types: [created]
+  issues:
+    types: [opened, assigned, labeled]
+
+jobs:
+  triage-issue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: CLAUDE
+    permissions:
+      contents: read
+      issues: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Run Claude Code for Issue Triage
+        uses: anthropics/claude-code-action@v1
+        env:
+          ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL }}
+        with:
+          # NOTE: /label-issue here requires a .claude/commands/label-issue.md file in your repo (see this repo's .claude directory for an example)
+          prompt: "/label-issue REPO: ${{ github.repository }} ISSUE_NUMBER${{ github.event.issue.number }}"
+
+          anthropic_auth_token: ${{ secrets.ANTHROPIC_AUTH_TOKEN }}
+          allowed_non_write_users: "*" # Required for issue triage workflow, if users without repo write access create issues
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+          # Configure trigger phrase (default: @claude)
+          trigger_phrase: "@claude"
+
+          # Optional: Customize branch prefix
+          branch_prefix: "claude/"
