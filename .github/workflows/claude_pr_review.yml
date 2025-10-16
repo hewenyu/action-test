@@ -20,7 +20,7 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Run Claude Code for Issue Triage
+      - name: Run Claude Code for PR Review
         uses: hewenyu/claude-code-action@crs
         env:
           ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL }}
@@ -30,6 +30,8 @@ jobs:
           # Enable progress tracking
           track_progress: true
 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          
           # Your custom review instructions
           prompt: |
             REPO: ${{ github.repository }}
