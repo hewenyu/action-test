@@ -35,6 +35,7 @@ jobs:
 
           # Configure trigger phrase (default: @claude)
           trigger_phrase: "@claude"
+          assignee_trigger: "claude-bot"
 
           # Optional: Customize branch prefix
           branch_prefix: "claude/"
