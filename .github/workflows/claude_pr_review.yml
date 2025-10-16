@@ -30,6 +30,8 @@ jobs:
           # Enable progress tracking
           track_progress: true
 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          
           # Your custom review instructions
           prompt: |
             REPO: ${{ github.repository }}
