@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 0
 
       - name: Run Claude Code for Issue Triage
-        uses: anthropics/claude-code-action@v1
+        uses: hewenyu/claude-code-action@crs
         env:
           ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL }}
         with:
